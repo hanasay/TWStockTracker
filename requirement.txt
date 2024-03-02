@@ -1,0 +1,6 @@
+twstock
+pandas
+numpy
+Cython
+TA-Lib
+matplotlib
