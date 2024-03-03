@@ -2,7 +2,8 @@ import twstock
 import discord
 from discord.ext import commands
 
-discord_token="MTE3MTc3Njk2OTg3MzA0NzYwMg.Gg7Qgu.FK72k9Kl7yEXk274hxWkW-1PHJzkl2pBJGyNto"
+with open('Discord_token.txt', 'r') as file
+    discord_token=file.readline()
 
 # intents是要求機器人的權限
 intents = discord.Intents.all()
