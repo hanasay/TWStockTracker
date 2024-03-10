@@ -1,11 +1,5 @@
-### Common
-import datetime,time
-import pandas as pd
-import numpy as np
-
-### GUI interface
-import tkinter as tk
-
+import GUI
 import plot
 
-plot.Plot_stock('2356', 14)
+if __name__ == '__main__':
+    GUI.Startup()
