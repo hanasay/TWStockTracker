@@ -1,21 +1,38 @@
+### common
 import datetime,time
-import twstock
-from talib import abstract
 import pandas as pd
 import numpy as np
+
+### twStock info API
+import twstock
+
+### Technical Indicators
+from talib import abstract
+
+### GUI interface
+import tkinter as tk
+
+### matplotlib import 
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Cursor
 from matplotlib.font_manager import FontProperties
 from matplotlib.ticker import AutoLocator, MultipleLocator
 
+### Changeable variable
 sid = '2356'
+rsi_day = 14
+
+### Get the name of stock
 stock_name = twstock.realtime.get(sid)['info']['name']
 
+### Get Stock From Specific time to 'today'
 stock = twstock.Stock(sid)
 target = stock.fetch_from(2023,7)
 
+### Setting Chinese-Tradition font
 font = FontProperties(fname=r'C:\Windows\Fonts\msjh.ttc', size=14)
 
+### Column name of Stock data
 name_attribute = ['date', 'capacity', 'turnover', 'open', 'high', 'low', 'close', 'change', 'transaction']
 
 #day = datetime.datetime.now()
@@ -23,22 +40,29 @@ name_attribute = ['date', 'capacity', 'turnover', 'open', 'high', 'low', 'close'
 
 df = pd.DataFrame(columns = name_attribute, data = target)
 
-rsi_day = 14
-
 df_kd = abstract.STOCH(df, fastk_period=9, slowk_period=3, slowd_period=3)
 df_rsi = abstract.RSI(df, rsi_day)
-#print(df_rsi)
-#df_rsi.plot(figsize=(16,8))
+
 plt.title(f'{sid} {stock_name}', fontproperties=font)
 plt.xlabel('日期', fontproperties=font)
 plt.ylabel('數值', fontproperties=font)
+
+### Stock Close Price plot
 plt.plot(df['date'], df['close'], label = '收盤價')
+
+### Stock RSI plot
 plt.plot(df['date'], df_rsi, label = f'RSI {rsi_day}Day')
+
+### Stock KD plot
 #plt.plot(df['date'], df_kd['slowk'], label = f'Slow K')
 #plt.plot(df['date'], df_kd['slowd'], label = f'Slow D')
 
 plt.legend(loc='upper left', shadow=True, prop=font)
+
+### Crosshair on image
 cursor = Cursor(plt.gca(), horizOn=True, vertOn=True, color='red', linewidth=1.0)
+
+### Set axis data type
 plt.gca().xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
 plt.gca().yaxis.set_major_locator(MultipleLocator(10))
 plt.gcf().autofmt_xdate()

@@ -4,3 +4,4 @@ numpy
 Cython
 TA-Lib
 matplotlib
+tkinter
