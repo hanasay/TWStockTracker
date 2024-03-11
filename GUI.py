@@ -76,26 +76,26 @@ def Startup():
 
     MACD = ["MACD_fast_label", "MACD_fast_entry", "MACD_slow_label", "MACD_slow_entry", "MACD_signal_label", "MACD_signal_entry"]
 
-    ### KD Part
-    KD_fastk_label = tk.Label(root, text="輸入Fast K Period (預設9)")
-    KD_fastk_label.pack_forget()
-    KD_fastk_entry = tk.Entry(root, width=20)
-    KD_fastk_entry.insert(-1, '9')
-    KD_fastk_entry.pack_forget()
+    ### KDJ Part
+    KDJ_fastk_label = tk.Label(root, text="輸入Fast K Period (預設9)")
+    KDJ_fastk_label.pack_forget()
+    KDJ_fastk_entry = tk.Entry(root, width=20)
+    KDJ_fastk_entry.insert(-1, '9')
+    KDJ_fastk_entry.pack_forget()
 
-    KD_slowk_label = tk.Label(root, text="輸入Slow K Period (預設3)")
-    KD_slowk_label.pack_forget()
-    KD_slowk_entry = tk.Entry(root, width=20)
-    KD_slowk_entry.insert(-1, '3')
-    KD_slowk_entry.pack_forget()
+    KDJ_slowk_label = tk.Label(root, text="輸入Slow K Period (預設3)")
+    KDJ_slowk_label.pack_forget()
+    KDJ_slowk_entry = tk.Entry(root, width=20)
+    KDJ_slowk_entry.insert(-1, '3')
+    KDJ_slowk_entry.pack_forget()
 
-    KD_slowd_label = tk.Label(root, text="輸入Slow D Period (預設3)")
-    KD_slowd_label.pack_forget()
-    KD_slowd_entry = tk.Entry(root, width=20)
-    KD_slowd_entry.insert(-1, '3')
-    KD_slowd_entry.pack_forget()
+    KDJ_slowd_label = tk.Label(root, text="輸入Slow D Period (預設3)")
+    KDJ_slowd_label.pack_forget()
+    KDJ_slowd_entry = tk.Entry(root, width=20)
+    KDJ_slowd_entry.insert(-1, '3')
+    KDJ_slowd_entry.pack_forget()
 
-    KD = ["KD_fastk_label", "KD_fastk_entry", "KD_slowk_label", "KD_slowk_entry", "KD_slowd_label", "KD_slowd_entry"]
+    KDJ = ["KDJ_fastk_label", "KDJ_fastk_entry", "KDJ_slowk_label", "KDJ_slowk_entry", "KDJ_slowd_label", "KDJ_slowd_entry"]
 
     ### RSI Part
     RSI_label = tk.Label(root, text="輸入RSI週期 (預設14)")
@@ -115,12 +115,12 @@ def Startup():
         "MACD_slow_entry": MACD_slow_entry,
         "MACD_signal_label": MACD_signal_label,
         "MACD_signal_entry": MACD_signal_entry,
-        "KD_fastk_label": KD_fastk_label,
-        "KD_fastk_entry": KD_fastk_entry,
-        "KD_slowk_label": KD_slowk_label,
-        "KD_slowk_entry": KD_slowk_entry,
-        "KD_slowd_label": KD_slowd_label,
-        "KD_slowd_entry": KD_slowd_entry,
+        "KDJ_fastk_label": KDJ_fastk_label,
+        "KDJ_fastk_entry": KDJ_fastk_entry,
+        "KDJ_slowk_label": KDJ_slowk_label,
+        "KDJ_slowk_entry": KDJ_slowk_entry,
+        "KDJ_slowd_label": KDJ_slowd_label,
+        "KDJ_slowd_entry": KDJ_slowd_entry,
         "RSI_label": RSI_label,
         "RSI_entry": RSI_entry
     }
