@@ -60,10 +60,10 @@ def Plot_stock(**kwargs):
             ax2.plot(stock_data['date'], stock_data_macd['macdhist'], label = f'HIST')
         case "KDJ":
             ### Stock KD plot
-            stock_data_kd = abstract.STOCH(stock_data, fastk_period=kwargs['KD_fastk'], slowk_period=kwargs['KD_slowk'], slowd_period=kwargs['KD_slowd'])
-            slowj = list(map(lambda x,y: 3*x-2*y, stock_data_kd['slowk'], stock_data_kd['slowd']))
-            ax2.plot(stock_data['date'], stock_data_kd['slowk'], label = f'K')
-            ax2.plot(stock_data['date'], stock_data_kd['slowd'], label = f'D')
+            stock_data_kdj = abstract.STOCH(stock_data, fastk_period=kwargs['KDJ_fastk'], slowk_period=kwargs['KDJ_slowk'], slowd_period=kwargs['KDJ_slowd'])
+            slowj = list(map(lambda x,y: 3*x-2*y, stock_data_kdj['slowk'], stock_data_kdj['slowd']))
+            ax2.plot(stock_data['date'], stock_data_kdj['slowk'], label = f'K')
+            ax2.plot(stock_data['date'], stock_data_kdj['slowd'], label = f'D')
             ax2.plot(stock_data['date'], slowj, label = f'J')
         case "RSI":
             ### Stock RSI plot
