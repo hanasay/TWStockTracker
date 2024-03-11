@@ -40,7 +40,7 @@ def Startup():
     selected_option.set("技術指標")
 
     # All supported Indicators
-    options = ["MA", "MACD", "KD", "RSI"]
+    options = ["MA", "MACD", "KDJ", "RSI"]
     option_menu = tk.OptionMenu(root, selected_option, *options, command=on_option_select)
     option_menu.pack()
 

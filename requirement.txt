@@ -4,4 +4,5 @@ numpy
 Cython
 TA-Lib
 matplotlib
-tkinter
+tk
+lxml
