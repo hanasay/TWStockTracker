@@ -77,19 +77,19 @@ def Startup():
     MACD = ["MACD_fast_label", "MACD_fast_entry", "MACD_slow_label", "MACD_slow_entry", "MACD_signal_label", "MACD_signal_entry"]
 
     ### KDJ Part
-    KDJ_fastk_label = tk.Label(root, text="輸入Fast K Period (預設9)")
+    KDJ_fastk_label = tk.Label(root, text="輸入Period (預設9)")
     KDJ_fastk_label.pack_forget()
     KDJ_fastk_entry = tk.Entry(root, width=20)
     KDJ_fastk_entry.insert(-1, '9')
     KDJ_fastk_entry.pack_forget()
 
-    KDJ_slowk_label = tk.Label(root, text="輸入Slow K Period (預設3)")
+    KDJ_slowk_label = tk.Label(root, text="輸入Slow K Period (預設3) *暫時停用")
     KDJ_slowk_label.pack_forget()
     KDJ_slowk_entry = tk.Entry(root, width=20)
     KDJ_slowk_entry.insert(-1, '3')
     KDJ_slowk_entry.pack_forget()
 
-    KDJ_slowd_label = tk.Label(root, text="輸入Slow D Period (預設3)")
+    KDJ_slowd_label = tk.Label(root, text="輸入Slow D Period (預設3) *暫時停用")
     KDJ_slowd_label.pack_forget()
     KDJ_slowd_entry = tk.Entry(root, width=20)
     KDJ_slowd_entry.insert(-1, '3')

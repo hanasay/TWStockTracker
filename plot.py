@@ -15,6 +15,21 @@ import twstock
 ### Technical Indicators
 from talib import abstract
 
+def my_kdj(df, period):
+    low_list = df['low'].rolling(9, min_periods=9).min()
+    low_list.fillna(value=df['low'].expanding().min(), inplace=True)
+    high_list = df['high'].rolling(9, min_periods=9).max()
+    high_list.fillna(value=df['high'].expanding().max(), inplace=True)
+    rsv = (df['close'] - low_list) / (high_list - low_list) * 100
+    df['K'] = pd.DataFrame(rsv).ewm(com=2).mean()
+    df['D'] = df['K'].ewm(com=2).mean()
+    df['J'] = 3 * df['K'] - 2 * df['D']
+    k = np.array(df['K'])
+    d = np.array(df['D'])
+    j = np.array(df['J'])
+
+    return k, d, j
+
 def Plot_stock(**kwargs):
     ### Changeable variable
     sid = kwargs['sid']
@@ -60,11 +75,10 @@ def Plot_stock(**kwargs):
             ax2.plot(stock_data['date'], stock_data_macd['macdhist'], label = f'HIST')
         case "KDJ":
             ### Stock KD plot
-            stock_data_kdj = abstract.STOCH(stock_data, fastk_period=kwargs['KDJ_fastk'], slowk_period=kwargs['KDJ_slowk'], slowd_period=kwargs['KDJ_slowd'])
-            slowj = list(map(lambda x,y: 3*x-2*y, stock_data_kdj['slowk'], stock_data_kdj['slowd']))
-            ax2.plot(stock_data['date'], stock_data_kdj['slowk'], label = f'K')
-            ax2.plot(stock_data['date'], stock_data_kdj['slowd'], label = f'D')
-            ax2.plot(stock_data['date'], slowj, label = f'J')
+            stock_data_kdj = my_kdj(stock_data, kwargs['KDJ_fastk'])
+            ax2.plot(stock_data['date'], stock_data_kdj[0], label = f'K')
+            ax2.plot(stock_data['date'], stock_data_kdj[1], label = f'D')
+            ax2.plot(stock_data['date'], stock_data_kdj[2], label = f'J')
         case "RSI":
             ### Stock RSI plot
             stock_data_RSI = abstract.RSI(stock_data, kwargs['RSI'])
