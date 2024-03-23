@@ -1,3 +1,5 @@
+import platform
+
 ### Common
 import datetime,time
 import pandas as pd
@@ -43,7 +45,12 @@ def Plot_stock(**kwargs):
     target = stock.fetch_from(2023,7)
 
     ### Setting Font To Chinese-Tradition
-    font = FontProperties(fname=r'C:\Windows\Fonts\msjh.ttc', size=14)
+
+    os_system = platform.system()
+    if os_system == "Windows":
+        font = FontProperties(fname=r'C:\Windows\Fonts\msjh.ttc', size=14)
+    elif os_system == "Darwin":
+        font = FontProperties(fname=r'/System/Library/Fonts/PingFang.ttc', size=14)
 
     ### Column Name of Stock Data
     name_attribute = ['date', 'capacity', 'turnover', 'open', 'high', 'low', 'close', 'change', 'transaction']
