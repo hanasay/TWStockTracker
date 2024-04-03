@@ -17,6 +17,8 @@ import twstock
 ### Technical Indicators
 from talib import abstract
 
+plt.style.use('dark_background')
+
 def my_kdj(df, period):
     low_list = df['low'].rolling(9, min_periods=9).min()
     low_list.fillna(value=df['low'].expanding().min(), inplace=True)
