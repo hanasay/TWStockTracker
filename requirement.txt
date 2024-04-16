@@ -6,3 +6,4 @@ TA-Lib
 matplotlib
 tk
 lxml
+tkcalendar

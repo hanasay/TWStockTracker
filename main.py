@@ -1,4 +1,6 @@
 import plot
+import simulator
+from tkcalendar import DateEntry
 
 try:
     import tkinter as tk                # python 3
@@ -13,7 +15,7 @@ class SampleApp(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
-        self.geometry('400x300')
+        self.geometry('400x600')
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
         # will be raised above the others
@@ -48,11 +50,11 @@ class StartPage(tk.Frame):
         self.controller = controller
         ### Apply Button
         Indicators_button = tk.Button(self, text="技術指標", command=lambda: controller.show_frame("IndicatorsPage"), height=3,width=15)
-        Indicators_button.pack()
+        Indicators_button.pack(pady=8)
 
         ### Apply Button
         simulator_button = tk.Button(self, text="模擬策略", command=lambda: controller.show_frame("SimulatorPage"), height=3,width=15)
-        simulator_button.pack()
+        simulator_button.pack(pady=8)
 
 
 class IndicatorsPage(tk.Frame):
@@ -63,6 +65,13 @@ class IndicatorsPage(tk.Frame):
         button = tk.Button(self, text="回首頁",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
+
+        # Add Calendar
+        cal_label = tk.Label(self, text="選擇追蹤日期 *")
+        cal_label.pack()
+        cal = DateEntry(self, locale='en_US', date_pattern='yyyy/MM/dd')
+        cal.pack(pady=10)
+
         ### Dropdown Event function
         def on_option_select(event):
             selected = selected_option.get()
@@ -83,6 +92,8 @@ class IndicatorsPage(tk.Frame):
             for name, widget in widgets.items():
                 if name.split('_')[0] == selected_option.get() and name.split('_')[-1] == 'entry':
                     kwargs[name[:-6]] = int(widget.get())
+            kwargs['date'] = cal.get_date()
+            print(kwargs['date'], type(kwargs['date']))
             print(kwargs)
             plot.Plot_stock(**kwargs)
 
@@ -155,11 +166,17 @@ class IndicatorsPage(tk.Frame):
         KDJ = ["KDJ_fastk_label", "KDJ_fastk_entry", "KDJ_slowk_label", "KDJ_slowk_entry", "KDJ_slowd_label", "KDJ_slowd_entry"]
 
         ### RSI Part
-        RSI_label = tk.Label(self, text="輸入RSI週期 (預設14)")
-        RSI_label.pack_forget()
-        RSI_entry = tk.Entry(self, width=20)
-        RSI_entry.insert(-1, '14')
-        RSI_entry.pack_forget()
+        RSI_1_label = tk.Label(self, text="輸入RSI週期1 (預設5)")
+        RSI_1_label.pack_forget()
+        RSI_1_entry = tk.Entry(self, width=20)
+        RSI_1_entry.insert(-1, '5')
+        RSI_1_entry.pack_forget()
+
+        RSI_2_label = tk.Label(self, text="輸入RSI週期2 (預設10)")
+        RSI_2_label.pack_forget()
+        RSI_2_entry = tk.Entry(self, width=20)
+        RSI_2_entry.insert(-1, '10')
+        RSI_2_entry.pack_forget()
 
         RSI = ["RSI_label", "RSI_entry"]
 
@@ -178,8 +195,10 @@ class IndicatorsPage(tk.Frame):
             "KDJ_slowk_entry": KDJ_slowk_entry,
             "KDJ_slowd_label": KDJ_slowd_label,
             "KDJ_slowd_entry": KDJ_slowd_entry,
-            "RSI_label": RSI_label,
-            "RSI_entry": RSI_entry
+            "RSI_1_label": RSI_1_label,
+            "RSI_1_entry": RSI_1_entry,
+            "RSI_2_label": RSI_2_label,
+            "RSI_2_entry": RSI_2_entry
         }
 
         ### Apply Button
@@ -192,11 +211,36 @@ class SimulatorPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="回首頁", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
+
+        def submit():
+            kwargs = {'sid': str(sid_entry.get()),'date': cal.get_date(), 'fund': str(fund_entry.get())}
+            simulator.setup(**kwargs)
+
+        button = tk.Button(self, text="回首頁",
+                        command=lambda: controller.show_frame("StartPage"))
         button.pack()
+        
+        # Add Calendar
+        cal_label = tk.Label(self, text="選擇追蹤日期 *")
+        cal_label.pack()
+        cal = DateEntry(self, locale='en_US', date_pattern='yyyy/MM/dd')
+        cal.pack(pady=10)
+
+        ### Stock ID Part
+        sid_label = tk.Label(self, text="輸入股票代號 *")
+        sid_label.pack()
+        sid_entry = tk.Entry(self, width=20)
+        sid_entry.pack()
+
+        ### Startup foundation Part
+        fund_label = tk.Label(self, text="輸入模擬初始資金 (單位 新台幣) *")
+        fund_label.pack()
+        fund_entry = tk.Entry(self, width=20)
+        fund_entry.pack()
+
+        ### Apply Button
+        submit_button = tk.Button(self, text="提交", command=submit)
+        submit_button.pack()
 
 
 if __name__ == "__main__":

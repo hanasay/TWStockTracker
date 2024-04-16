@@ -44,9 +44,11 @@ def Plot_stock(**kwargs):
 
     ### Get Stock From Specific time to 'today'
     stock = twstock.Stock(sid)
-    target = stock.fetch_from(2023,7)
+    target_time = kwargs['date']
+    target = stock.fetch_from(target_time.year, target_time.month)
 
     ### Setting Font To Chinese-Tradition
+    ### Check OS system type is Mac_OSX or Windows
 
     os_system = platform.system()
     if os_system == "Windows":
@@ -75,7 +77,7 @@ def Plot_stock(**kwargs):
         case "MA":
             ### Stock MA plot
             stock_data_ma = abstract.MA(stock_data, kwargs['MA'])
-            ax2.plot(stock_data['date'], stock_data_ma, label = f'RSI {kwargs[mode]}')
+            ax2.plot(stock_data['date'], stock_data_ma, label = f'MA {kwargs[mode]}')
         case "MACD":
             ### Stock MACD plot
             stock_data_macd = abstract.MACD(stock_data, fastperiod=kwargs['MACD_fast'], slowperiod=kwargs['MACD_slow'], signalperiod=kwargs['MACD_signal'])
@@ -90,8 +92,10 @@ def Plot_stock(**kwargs):
             ax2.plot(stock_data['date'], stock_data_kdj[2], label = f'J')
         case "RSI":
             ### Stock RSI plot
-            stock_data_RSI = abstract.RSI(stock_data, kwargs['RSI'])
-            ax2.plot(stock_data['date'], stock_data_RSI, label = f'RSI {kwargs[mode]}')
+            stock_data_RSI1 = abstract.RSI(stock_data, kwargs['RSI_1'])
+            ax2.plot(stock_data['date'], stock_data_RSI1, label = f'RSI {kwargs['RSI_1']}')
+            stock_data_RSI2 = abstract.RSI(stock_data, kwargs['RSI_2'])
+            ax2.plot(stock_data['date'], stock_data_RSI2, label = f'RSI {kwargs['RSI_2']}')
 
     ax1.legend(loc='upper left', shadow=True, prop=font, bbox_to_anchor=(1, 0.5))
     ax2.legend(loc='upper left', shadow=True, prop=font, bbox_to_anchor=(1, 0.5))
